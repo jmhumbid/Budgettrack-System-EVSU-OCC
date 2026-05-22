@@ -1,0 +1,73 @@
+                <!-- Procurement Viewer Cards -->
+                <div class='grid grid-cols-1 md:grid-cols-3 gap-5 mb-6'>
+                    <a href='allocations_view.php' class='group block rounded-3xl bg-gradient-to-br from-maroon to-red-600 text-white p-6 shadow-xl hover:-translate-y-1 transition'>
+                        <p class='text-xs uppercase tracking-[0.4em] text-white/80'>Allocations</p>
+                        <h3 class='text-2xl font-semibold mt-3'>Allocation Viewer</h3>
+                        <p class='text-sm text-white/80 mt-2'>Review the allocation file assigned to your department or office.</p>
+                        <div class='mt-6 flex items-center justify-between text-sm uppercase tracking-[0.4em]'>
+                            <span>Open →</span>
+                            <span class='w-10 h-10 rounded-full bg-white/20 flex items-center justify-center'>
+                                <span class='text-lg'>↗</span>
+                            </span>
+                        </div>
+                    </a>
+                    <a href='cabac_view.php' class='group block rounded-3xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white p-6 shadow-xl hover:-translate-y-1 transition'>
+                        <p class='text-xs uppercase tracking-[0.4em] text-white/80'>CABAC</p>
+                        <h3 class='text-2xl font-semibold mt-3'>CABAC Viewer</h3>
+                        <p class='text-sm text-white/80 mt-2'>Compare approved budgets with actual collections.</p>
+                        <div class='mt-6 flex items-center justify-between text-sm uppercase tracking-[0.4em]'>
+                            <span>Open →</span>
+                            <span class='w-10 h-10 rounded-full bg-white/20 flex items-center justify-center'>
+                                <span class='text-lg'>↗</span>
+                            </span>
+                        </div>
+                    </a>
+                    <a href='utilization__view.php' class='group block rounded-3xl bg-gradient-to-br from-teal-500 to-emerald-600 text-white p-6 shadow-xl hover:-translate-y-1 transition'>
+                        <p class='text-xs uppercase tracking-[0.4em] text-white/80'>Utilization</p>
+                        <h3 class='text-2xl font-semibold mt-3'>Utilization Viewer</h3>
+                        <p class='text-sm text-white/80 mt-2'>Access the latest utilization file uploaded by the Budget Office.</p>
+                        <div class='mt-6 flex items-center justify-between text-sm uppercase tracking-[0.4em]'>
+                            <span>Open →</span>
+                            <span class='w-10 h-10 rounded-full bg-white/20 flex items-center justify-center'>
+                                <span class='text-lg'>↗</span>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Quick Actions Section -->
+                <div class='bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6'>
+                    <h2 class='text-xl font-bold text-maroon mb-6'>Quick Actions</h2>
+                    <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4'>
+                        <button onclick= window.location.href=submit_documents.php class='flex items-center justify-center px-6 py-4 bg-maroon text-white rounded-lg hover:bg-maroon-dark transition-colors'>
+                            <svg class='w-5 h-5 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
+                            </svg>
+                            PPMP | LIB | APP
+                        </button>
+                        <button onclick=window.location.href=proc_track_requests.php class='flex items-center justify-center px-6 py-4 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors'>
+                            <svg class='w-5 h-5 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2m-6 9l2 2 4-4'></path>
+                            </svg>
+                            Track Requests
+                        </button>
+                        <button onclick=window.location.href=automated_reports.php class='flex items-center justify-center px-6 py-4 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors'>
+                            <svg class='w-5 h-5 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2m0-6V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'></path>
+                            </svg>
+                            View Reports
+                        </button>
+                        <button onclick=window.location.href=proc_notifications.php class='flex items-center justify-center px-6 py-4 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors'>
+                            <svg class='w-5 h-5 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 17h5l-5 5v-5zM4.828 7l2.586 2.586a2 2 0 102.828 2.828l6.414 6.414a2 2 0 01-2.828 2.828L4.828 7z'></path>
+                            </svg>
+                            Notifications
+                        </button>
+                        <button onclick=window.location.href=proc_announcements.php class='flex items-center justify-center px-6 py-4 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors'>
+                            <svg class='w-5 h-5 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                                <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'></path>
+                            </svg>
+                            Announcements
+                        </button>
+                    </div>
+                </div>

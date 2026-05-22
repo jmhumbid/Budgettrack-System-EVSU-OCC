@@ -1,0 +1,125 @@
+
+body {
+    background: url('../../img/bg.png') center/cover no-repeat fixed, #f5f7fb;
+}
+.login-wrapper {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 30px 20px;
+}
+.login-card {
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.15);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    overflow: hidden;
+    max-width: 1100px;
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    position: relative; 
+}
+.login-visual {
+    background: linear-gradient(135deg, rgba(255,255,255,.5), rgba(255,255,255,.85)), url('img/bg.png') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+.login-visual .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #800000;
+    font-weight: 800;
+    font-size: 26px;
+}
+.login-form {
+    padding: 50px 40px;
+    background: #fff;
+}
+.login-form h1 {
+    font-size: 32px;
+    font-weight: 800;
+    color: #800000;
+    margin: 0 0 16px;
+}
+.login-form .muted { color: #6b7280; margin-bottom: 24px; }
+.field { margin-bottom: 16px; }
+.label { display:block; font-weight:600; margin-bottom:8px; }
+.input {
+    width:100%;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:14px 16px;
+    font: inherit;
+    outline:none;
+    transition:border .2s, box-shadow .2s;
+}
+.input:focus { border-color:#800000; box-shadow:0 0 0 3px rgba(128,0,0,.12); }
+.btn-login {
+    width:100%;
+    border:none;
+    border-radius:12px;
+    padding:14px 16px;
+    background: linear-gradient(135deg, #b30000, #800000);
+    color:#fff; font-weight:700; cursor:pointer;
+    box-shadow: 0 8px 25px rgba(128,0,0,.35);
+    transition: transform .1s ease-in-out, box-shadow .2s;
+}
+.btn-login:hover { transform: translateY(-1px); box-shadow:0 12px 30px rgba(128,0,0,.45); }
+.row-between { display:flex; justify-content:space-between; align-items:center; margin-top:14px; }
+.link { color:#800000; text-decoration:none; font-weight:600; }
+.small { font-size: 13px; color:#6b7280; }
+@media (max-width: 900px){ .login-card{ grid-template-columns: 1fr; } .login-visual{ display:none; } }
+
+.site-brand {
+    position: fixed;
+    left: 16px;
+    top: 16px;
+    color: #800000;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 20px;
+    z-index: 1000;
+}
+
+.back-link {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    color: #800000;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.visual-img {
+    width: 80%;
+    max-width: 420px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.15);
+}
+
+
+.login-bg {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.50)), url('../../img/budget3.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.left-panel-bg {
+    background-image: url('../../img/gimi.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.evsu-underline {
+    width: 280px;
+}
+
+.sign-in-title {
+    font-family: 'Bebas Neue', Inter, sans-serif;
+    letter-spacing: 0.5px;
+}

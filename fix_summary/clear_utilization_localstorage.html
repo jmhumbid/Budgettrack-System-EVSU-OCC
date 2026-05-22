@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Utilization LocalStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #800000;
+        }
+        .button {
+            background: #800000;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        .button:hover {
+            background: #a00000;
+        }
+        .button.danger {
+            background: #dc3545;
+        }
+        .button.danger:hover {
+            background: #c82333;
+        }
+        .info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-left: 4px solid #2196F3;
+            margin: 20px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+        }
+        .success {
+            background: #d4edda;
+            padding: 15px;
+            border-left: 4px solid #28a745;
+            margin: 20px 0;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        input {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Clear Utilization LocalStorage</h1>
+        
+        <div class="info">
+            <strong>Instructions:</strong>
+            <ol>
+                <li>Enter the Department ID (e.g., 15 for Education)</li>
+                <li>Click "Clear LocalStorage" to remove all utilization data for that department</li>
+                <li>Or click "Clear All LocalStorage" to remove all utilization data</li>
+            </ol>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ Warning:</strong> This will only clear data from your browser's localStorage. 
+            To remove the entry from the database, use the deletion feature in the utilization page, 
+            or contact your administrator.
+        </div>
+        
+        <div>
+            <label>Department ID:</label>
+            <input type="number" id="departmentId" placeholder="e.g., 15" value="15">
+            <button class="button" onclick="clearDepartmentStorage()">Clear LocalStorage for Department</button>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <button class="button danger" onclick="clearAllStorage()">Clear All Utilization LocalStorage</button>
+        </div>
+        
+        <div id="result"></div>
+        
+        <div class="info" style="margin-top: 30px;">
+            <strong>To clear from Database:</strong>
+            <p>Open the browser console (F12) and run:</p>
+            <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px;">
+fetch('../api/manual_delete_entry.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+        category_name: 'ENTRY 1',
+        department_id: 15,
+        fiscal_year: 2026
+    })
+}).then(r => r.json()).then(console.log);
+            </pre>
+        </div>
+    </div>
+    
+    <script>
+        function showResult(message, type) {
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            result.className = type;
+            result.textContent = message;
+        }
+        
+        function clearDepartmentStorage() {
+            const deptId = document.getElementById('departmentId').value;
+            if (!deptId) {
+                showResult('Please enter a Department ID', 'warning');
+                return;
+            }
+            
+            const keys = [
+                `utilization_data_dept_${deptId}`,
+                `deductions_data_dept_${deptId}`
+            ];
+            
+            let cleared = 0;
+            keys.forEach(key => {
+                if (localStorage.getItem(key)) {
+                    localStorage.removeItem(key);
+                    cleared++;
+                }
+            });
+            
+            if (cleared > 0) {
+                showResult(`Successfully cleared ${cleared} localStorage key(s) for department ${deptId}`, 'success');
+            } else {
+                showResult(`No localStorage data found for department ${deptId}`, 'info');
+            }
+        }
+        
+        function clearAllStorage() {
+            if (!confirm('Are you sure you want to clear ALL utilization localStorage data? This cannot be undone.')) {
+                return;
+            }
+            
+            let cleared = 0;
+            const keysToRemove = [];
+            
+            // Find all utilization-related keys
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && (key.startsWith('utilization_data_dept_') || key.startsWith('deductions_data_dept_'))) {
+                    keysToRemove.push(key);
+                }
+            }
+            
+            keysToRemove.forEach(key => {
+                localStorage.removeItem(key);
+                cleared++;
+            });
+            
+            if (cleared > 0) {
+                showResult(`Successfully cleared ${cleared} localStorage key(s)`, 'success');
+            } else {
+                showResult('No utilization localStorage data found', 'info');
+            }
+        }
+    </script>
+</body>
+</html>
+

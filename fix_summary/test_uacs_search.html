@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test UACS Search</title>
+    <script src="assets/js/uacs_codes.js"></script>
+</head>
+<body>
+    <h1>Test UACS Search Function</h1>
+    <div id="results"></div>
+
+    <script>
+        // Test the search function
+        function searchUACSForDescription(description) {
+            if (!description || typeof UACS_CODES === 'undefined') {
+                return { code: '', name: description };
+            }
+            
+            const searchTerm = description.toLowerCase().trim();
+            
+            // Keyword mapping for common allocation terms
+            const keywordMap = {
+                'part-time': 'honoraria part',
+                'overload': 'honoraria overload',
+                'cos': 'labor wages',
+                'water': 'water expenses',
+                'electricity': 'electricity expenses',
+                'electric': 'electricity expenses',
+                'security': 'security',
+                'labor': 'labor wages',
+                'wages': 'labor wages',
+                'internet': 'internet',
+                'telephone': 'telephone',
+                'supplies': 'office supplies',
+                'materials': 'office supplies',
+                'repair': 'repairs maintenance',
+                'maintenance': 'repairs maintenance'
+            };
+            
+            // Check if we have a keyword match
+            let searchKey = searchTerm;
+            for (const [keyword, replacement] of Object.entries(keywordMap)) {
+                if (searchTerm.includes(keyword)) {
+                    searchKey = replacement;
+                    break;
+                }
+            }
+            
+            // Flatten UACS_CODES into a single array
+            const allUACSCodes = [];
+            for (const category in UACS_CODES) {
+                if (UACS_CODES.hasOwnProperty(category)) {
+                    allUACSCodes.push(...UACS_CODES[category]);
+                }
+            }
+            
+            // Search through UACS codes
+            let bestMatch = null;
+            let bestScore = 0;
+            
+            for (const uacs of allUACSCodes) {
+                const uacsName = uacs.name.toLowerCase();
+                const uacsCode = uacs.code.toLowerCase();
+                
+                // Exact match
+                if (uacsName === searchKey || uacsName === searchTerm) {
+                    return { code: uacs.code, name: uacs.name };
+                }
+                
+                // Partial match
+                if (uacsName.includes(searchKey) || uacsName.includes(searchTerm)) {
+                    const score = searchKey.length / uacsName.length;
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMatch = uacs;
+                    }
+                }
+                
+                // Check keywords in UACS name
+                const keywords = searchKey.split(' ');
+                let matchCount = 0;
+                for (const keyword of keywords) {
+                    if (keyword.length > 2 && uacsName.includes(keyword)) {
+                        matchCount++;
+                    }
+                }
+                if (matchCount > 0) {
+                    const score = matchCount / keywords.length;
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMatch = uacs;
+                    }
+                }
+            }
+            
+            if (bestMatch && bestScore > 0.3) {
+                return { code: bestMatch.code, name: bestMatch.name };
+            }
+            
+            return { code: '', name: description };
+        }
+
+        // Test cases
+        const testCases = [
+            'Part-time',
+            'Overload',
+            'COS',
+            'Water',
+            'Electricity',
+            'Security',
+            'Internet',
+            'Telephone',
+            'Office Supplies'
+        ];
+
+        let resultsHTML = '<table border="1" style="border-collapse: collapse; width: 100%;">';
+        resultsHTML += '<tr><th>Input</th><th>UACS Code</th><th>UACS Name</th></tr>';
+
+        testCases.forEach(testCase => {
+            const result = searchUACSForDescription(testCase);
+            resultsHTML += `<tr>
+                <td>${testCase}</td>
+                <td>${result.code}</td>
+                <td>${result.name}</td>
+            </tr>`;
+        });
+
+        resultsHTML += '</table>';
+        document.getElementById('results').innerHTML = resultsHTML;
+    </script>
+</body>
+</html>

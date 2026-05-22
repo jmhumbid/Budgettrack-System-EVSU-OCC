@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test LIB Expense Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h1 class="text-2xl font-bold mb-4">LIB Expense Category Search Test</h1>
+        
+        <div class="mb-6">
+            <label class="block text-sm font-semibold mb-2">Search Categories:</label>
+            <input type="text" id="libExpenseSearch" onkeyup="searchLibExpenses()" 
+                   placeholder="Type 'Office' to test..." 
+                   class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600">
+        </div>
+        
+        <div id="libExpenseCategoriesContainer">
+            <!-- Test categories -->
+            <div class="mb-6">
+                <h4 class="text-lg font-bold text-green-900 mb-3">B. Maintenance & Other Operating Expenses</h4>
+                <div class="grid grid-cols-1 gap-2">
+                    <button type="button" class="text-left px-4 py-3 bg-green-50 hover:bg-green-100 border-2 border-green-200 rounded-lg">
+                        <div class="font-semibold text-green-900 text-sm">Office Supplies Expenses</div>
+                        <div class="text-xs text-green-700 mt-1">Code: 5020301000</div>
+                    </button>
+                    <button type="button" class="text-left px-4 py-3 bg-green-50 hover:bg-green-100 border-2 border-green-200 rounded-lg">
+                        <div class="font-semibold text-green-900 text-sm">Water Expenses</div>
+                        <div class="text-xs text-green-700 mt-1">Code: 5020401000</div>
+                    </button>
+                    <button type="button" class="text-left px-4 py-3 bg-green-50 hover:bg-green-100 border-2 border-green-200 rounded-lg">
+                        <div class="font-semibold text-green-900 text-sm">Electricity Expenses</div>
+                        <div class="text-xs text-green-700 mt-1">Code: 5020402000</div>
+                    </button>
+                    <button type="button" class="text-left px-4 py-3 bg-green-50 hover:bg-green-100 border-2 border-green-200 rounded-lg">
+                        <div class="font-semibold text-green-900 text-sm">Postage and Courier Services</div>
+                        <div class="text-xs text-green-700 mt-1">Code: 5020501000</div>
+                    </button>
+                    <button type="button" class="text-left px-4 py-3 bg-green-50 hover:bg-green-100 border-2 border-green-200 rounded-lg">
+                        <div class="font-semibold text-green-900 text-sm">Other Maintenance and Operating Expenses</div>
+                        <div class="text-xs text-green-700 mt-1">Code: 5029900000</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
+            <h3 class="font-bold text-blue-900 mb-2">Test Instructions:</h3>
+            <ol class="list-decimal list-inside text-sm text-blue-800 space-y-1">
+                <li>Type "Office" in the search box - should show only "Office Supplies Expenses"</li>
+                <li>Type "Expenses" - should show "Office Supplies Expenses", "Water Expenses", "Electricity Expenses", and "Other Maintenance and Operating Expenses"</li>
+                <li>Type "Post" - should show only "Postage and Courier Services"</li>
+                <li>Clear search - should show all categories again</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        function searchLibExpenses() {
+            const searchTerm = document.getElementById('libExpenseSearch').value.toLowerCase();
+            const allExpenses = document.querySelectorAll('#libExpenseCategoriesContainer button');
+            
+            console.log('Search term:', searchTerm);
+            console.log('Found buttons:', allExpenses.length);
+            
+            allExpenses.forEach(btn => {
+                const text = btn.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    btn.style.display = 'block';
+                    console.log('Showing:', btn.querySelector('.font-semibold').textContent);
+                } else {
+                    btn.style.display = 'none';
+                    console.log('Hiding:', btn.querySelector('.font-semibold').textContent);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

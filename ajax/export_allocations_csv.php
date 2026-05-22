@@ -1,0 +1,50 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['budget','school_admin'])) {
+    http_response_code(403);
+    exit('Unauthorized');
+}
+
+require_once __DIR__ . '/../config/database.php';
+
+$departmentId = isset($_GET['department_id']) && $_GET['department_id'] !== '' ? (int)$_GET['department_id'] : null;
+$fiscalYear = isset($_GET['fiscal_year']) && $_GET['fiscal_year'] !== '' ? (int)$_GET['fiscal_year'] : (int)date('Y');
+
+try {
+    $db = getDB();
+    $params = [':fiscal_year' => $fiscalYear];
+    $where = 'ba.fiscal_year = :fiscal_year';
+    if ($departmentId) {
+        $where .= ' AND ba.department_id = :department_id';
+        $params[':department_id'] = $departmentId;
+    }
+
+    $sql = "SELECT d.dept_code, bc.category_code, ba.fiscal_year, ba.allocated_amount
+            FROM budget_allocations ba
+            LEFT JOIN departments d ON ba.department_id = d.id
+            LEFT JOIN budget_categories bc ON ba.category_id = bc.id
+            WHERE $where
+            ORDER BY d.dept_code, bc.category_code";
+
+    $stmt = $db->prepare($sql);
+    foreach ($params as $k => $v) { $stmt->bindValue($k, $v); }
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $filename = 'allocations_' . $fiscalYear . '.csv';
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename=' . $filename);
+    $out = fopen('php://output', 'w');
+    fputcsv($out, ['department_code','category_code','fiscal_year','allocated_amount']);
+    foreach ($rows as $r) {
+        fputcsv($out, [$r['dept_code'], $r['category_code'], $r['fiscal_year'], $r['allocated_amount']]);
+    }
+    fclose($out);
+} catch (Exception $e) {
+    http_response_code(500);
+    echo 'Server error';
+}
+?>
+
+
